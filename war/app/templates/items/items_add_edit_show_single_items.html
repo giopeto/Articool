@@ -1,0 +1,46 @@
+<form role="form">
+	<div class="row">
+		<div ng-class="itemsCtrl.item.aFileIds.length>0?'form-group col-lg-6':'form-group col-lg-12'">
+			<label for="name">Name:</label> 
+			<input type="text" class="form-control" id="name" name="name" ng-model="itemsCtrl.item.name"/>
+			<label for="name">Group:</label>
+			
+			<select class="form-control" id="sel1" ng-model="itemsCtrl.item.groupId" class="danger">
+				<option ng-repeat="row in itemsCtrl.groups" value="{{row.id}}">{{row.name}}</option>
+			</select>
+			<div class="alert alert-danger" ng-if="itemsCtrl.errorMsg.groupErr">
+				<strong>Group</strong> is required field
+			</div>
+			<label for="name">Price:</label> 
+		    <input  class="form-control" id="price" name="price" ng-model="itemsCtrl.item.price" type="number" value="0.00" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"  />
+			<label for="shortDescription">Short description:</label> 
+			<input class="form-control" id="shortDescription" name="shortDescription" ng-model="itemsCtrl.item.shortDescription"/>
+			<label for="description">Description:</label> 
+			<textarea class="form-control" id="description" name="description" ng-model="itemsCtrl.item.description" rows="5"></textarea>
+		</div>
+		<div class="col-lg-6">
+			<table class="table table-striped" ng-if="itemsCtrl.item.aFileIds.length>0">
+			   <thead>
+			     <tr>
+			       <th></th>
+			       <th></th>
+			       <th></th>
+			     </tr>
+			   </thead>
+			   <tbody>
+			     <tr ng-repeat="row in itemsCtrl.item.aFileIds track by $index">       
+			       <td><span class="glyphicon glyphicon-arrow-up text-center" ng-click="itemsCtrl.changeFilesOrder({index: $index, direction: 'up'})" ng-if="$index>0"></span></td>
+			       <td><span class="glyphicon glyphicon-arrow-down text-center"  ng-click="itemsCtrl.changeFilesOrder({index: $index, direction: 'down'})" ng-if="$index!==itemsCtrl.item.aFileIds.length-1"></span></td>				       
+			       <td><img style="width: 20%" src="serve?blob-key={{row}}" alt="" ng-if="row" ng-cloak></td>				      				
+			       <td><span class="glyphicon glyphicon-remove" ng-click="itemsCtrl.removeFile({index: $index})"></span></td>
+			     </tr>
+			   </tbody>
+			</table>
+		</div>
+	</div>
+	<button type="submit" class="btn btn-primary" ng-click="itemsCtrl.set()"> <span ng-class="itemsCtrl.item.id>0?'glyphicon glyphicon-pencil':'glyphicon glyphicon-plus'"></span> {{itemsCtrl.item.id>0?'Save':'Create'}}</button>
+	<a type="button" class="btn btn-default" href="index.html#/files_add_edit/{{itemsCtrl.item.id}}" ng-if="itemsCtrl.item.id>0"><span class="glyphicon glyphicon-camera"></span> Add image</a>
+	<a type="button" class="btn btn-default" href="/#items_add_edit/#{{itemsCtrl.item.id}}"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Back</a>
+	<br/>
+	<br/>
+</form>

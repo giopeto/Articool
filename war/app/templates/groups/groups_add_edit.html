@@ -1,0 +1,4 @@
+<div ng-controller="groupsCtrl as groupsCtrl">
+	<div ng-include="'app/templates/groups/groups_add_edit_show_all.html'" ng-if="groupsCtrl.showAll" ng-class="groupsCtrl.isLoading?'loader':''"></div>
+	<div ng-include="'app/templates/groups/groups_add_edit_show_single.html'" ng-if="!groupsCtrl.showAll" ng-class="groupsCtrl.isLoading?'loader':''"></div>
+</div>

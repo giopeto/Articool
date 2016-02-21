@@ -1,0 +1,12 @@
+<h2>{{groupsCtrl.group.id>0?'Edit group':'Add new group'}}</h2>
+		
+<form class="row" role="form">
+	<div class="form-group col-lg-12">
+		<label for="name">Name:</label> 
+		<input type="text" class="form-control" id="name" name="name" ng-model="groupsCtrl.group.name"/>
+	</div>
+</form>
+<br/>
+<br/>
+<button type="submit" class="btn btn-primary" ng-click="groupsCtrl.set()"> <span ng-class="groupsCtrl.item.id>0?'glyphicon glyphicon-pencil':'glyphicon glyphicon-plus'"></span> {{groupsCtrl.item.id>0?'Save':'Create'}}</button>
+<a type="button" class="btn btn-default" href="/#groups_add_edit/"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Back</a>

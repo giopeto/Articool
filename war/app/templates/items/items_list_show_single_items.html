@@ -1,0 +1,23 @@
+<div class="text-center">
+	<h1>{{listsCtrl.item.name}}</h1>
+</div>
+<div class="text-center">
+	<a class="lbox-image-link" href="serve?blob-key={{listsCtrl.item.aFileIds[0]}}" data-lightbox="lbox-set">
+		<img src="serve?blob-key={{listsCtrl.item.aFileIds[0]}}" class="lbox-image img-responsive thumbnail center-block" alt="" style="max-width: 70%" ng-cloak>
+	</a>
+	<div>
+		<h2>Price {{listsCtrl.item.price}} lv.</h2>
+		<h3>{{listsCtrl.item.shortDescription}}</h3>
+		{{listsCtrl.item.description}}
+	</div>
+</div>
+<br/>
+<br/>
+<div class="row row-centered">
+	<a class="lbox-image-link col-lg-3 col-md-4 col-xs-6 col-centered" href="serve?blob-key={{row}}" data-lightbox="lbox-set" ng-repeat="row in listsCtrl.item.aFileIds"  ng-if="$index > 0">
+		<img src="serve?blob-key={{row}}" class="lbox-image img-responsive thumbnail" alt="" ng-cloak>
+	</a>
+</div>
+<br/> 
+<a type="button" class="btn btn-default btn-lg text-center" href="/#items_list/"><span class="glyphicon glyphicon-menu-left pull-left"></span>&nbsp;&nbsp;Back</a>
+<br/><br/>

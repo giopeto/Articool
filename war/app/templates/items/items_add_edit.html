@@ -1,0 +1,4 @@
+<div ng-controller="itemsCtrl as itemsCtrl">
+	<div ng-include="'app/templates/items/items_add_edit_show_all_items.html'" ng-if="itemsCtrl.showAllItems" ng-class="itemsCtrl.isLoading?'loader':''"></div>
+	<div ng-include="'app/templates/items/items_add_edit_show_single_items.html'" ng-if="!itemsCtrl.showAllItems" ng-class="itemsCtrl.isLoading?'loader':''"></div>
+</div>

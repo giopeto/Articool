@@ -1,0 +1,15 @@
+<div id="card" >
+	<div class="container">
+		<ul class="items">
+			<li class="item item{{$index}}" ng-repeat="row in listsCtrl.allItems track by $index" id="{{row.id}}">
+				<a  href ng-click="listsCtrl.showSingleItem({thisItem: row})" ng-if="row.aFileIds[0]" ng-cloak>
+					<img src="serve?blob-key={{row.aFileIds[0]}}" class="img-responsive thumbnail center-block" alt="Image" >
+				</a>
+				<div class="item-text">
+					<h2>{{row.name}}</h2>
+					<p>{{row.shortDescription}}</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

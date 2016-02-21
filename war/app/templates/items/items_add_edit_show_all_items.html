@@ -1,0 +1,26 @@
+<!-- <div class="radio">
+  <label><input ng-model="itemsCtrl.showInTable" ng-click="itemsCtrl.showInTable=!itemsCtrl.showInTable" type="radio" name="optradio">Show in table</label>
+</div> -->	
+<div ng-repeat="row in itemsCtrl.allItems" class="thumbnail">
+	<div class="row" id="{{row.id}}">
+		<div class="col-lg-4">
+			<div class="embed-responsive embed-responsive-16by9">
+				<img src="serve?blob-key={{row.aFileIds[0]}}"  class="img-responsive thumbnail center-block" alt="Image" ng-if="row.aFileIds[0]">
+			</div>
+			<br/>
+			<div >
+				<button type="button" class="btn btn-success" ng-click="itemsCtrl.edit({thisItem: row})"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+		    	<a type="button" class="btn btn-default" href="index.html#/files_add_edit/{{row.id}}"><span class="glyphicon glyphicon-camera"></span> Add image</a>			
+		      	<button type="button" class="btn btn-danger" ng-click="itemsCtrl.delete({id: row.id})"><span class="glyphicon glyphicon-remove"></span> Delete</button>			
+			</div>			
+		</div>	
+		<div class="col-lg-8">
+			<h2>{{row.name}} <span ng-if="row.price">{{row.price}} lv.</span></h2>
+			<h3>{{row.shortDescription}}</h3>
+			<p>{{row.description}}</p>
+		</div>
+	</div>
+</div>		
+ 
+ <button type="button" class="btn lg btn-success" ng-click="itemsCtrl.prepareSetUI()"><span class="glyphicon glyphicon-plus"></span> Add new</button>
+ <br/><br/>

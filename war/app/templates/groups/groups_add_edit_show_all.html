@@ -1,0 +1,17 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th><span class="glyphicon glyphicon-pencil"></span></th>
+			<th><span class="glyphicon glyphicon-remove"></th>
+	</thead>
+	<tbody>
+		<tr ng-repeat="row in groupsCtrl.all">
+			<td>{{row.name}}</td>
+			<td><button type="button" class="btn btn-success" ng-click="groupsCtrl.edit({thisGroup: row})"><span class="glyphicon glyphicon-pencil"></span> Edit</button></td>
+			<td><button type="button" class="btn btn-danger" ng-click="groupsCtrl.delete({id: row.id})"><span class="glyphicon glyphicon-remove"></span> Delete</button></td>
+		</tr>
+	</tbody>
+</table>
+<button type="button" class="btn lg btn-success" ng-click="groupsCtrl.prepareSetUI()"><span class="glyphicon glyphicon-plus"></span> Add new</button>
+<br/><br/>
