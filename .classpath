@@ -6,5 +6,12 @@
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/objectify-4.0b1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="C:/Users/George/.m2/repository/com/google/appengine/appengine-java-sdk/1.9.25/appengine-java-sdk/appengine-java-sdk-1.9.25/lib/user/appengine-api-1.0-sdk-1.9.25.jar" sourcepath="C:/Users/George/.m2/repository/com/google/appengine/appengine-java-sdk/1.9.25/appengine-java-sdk/appengine-java-sdk-1.9.25/src/user/appengine-api-1.0-sdk-1.9.25-src.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Users/George/.m2/repository/com/google/appengine/appengine-java-sdk/1.9.25/appengine-java-sdk/appengine-java-sdk-1.9.25/docs/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/Dev/workspace/Articool/war/WEB-INF/lib/google +/google-api-client-1.17.0-rc.jar"/>
+	<classpathentry kind="lib" path="D:/Dev/workspace/Articool/war/WEB-INF/lib/google +/google-api-client-jackson2-1.17.0-rc.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
