@@ -1,0 +1,26 @@
+
+
+<div ng-controller="loginCtrl as loginCtrl">
+	
+	
+	
+	
+	<p ng-if="loginCtrl.name">Hello {{loginCtrl.name}}</p>
+	
+	<img src="{{loginCtrl.picture}}" class="img-responsive img-circle" alt="" style="max-width: 5%" ng-cloak ng-if="loginCtrl.picture!=''">
+	
+	<br/>
+	
+	
+	<button ng-click="loginCtrl.authenticate('google')">Sign in with Google</button>
+	
+	<button ng-click="loginCtrl.logout()">logout</button>
+	
+	<!-- <button ng-click="loginCtrl.authenticate('facebook')">Sign in with Facebook</button> -->
+	<!-- <button ng-click="signedOut()">Sign out</button> -->
+	
+</div>
+
+
+
+
