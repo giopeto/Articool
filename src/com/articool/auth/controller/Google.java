@@ -1,7 +1,8 @@
-package com.articool.auth;
+package com.articool.auth.controller;
 
 
 import java.io.IOException;
+
 
 
 
@@ -26,29 +27,24 @@ public class Google extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
-		JSONObject jsonReq = (JSONObject) JsonUtil.makeJson(req);
+		JsonObject thisUser = null;
 		
 		
-		
-		//System.out.println("asdasd" + JsonUtil.makeJson(req).toString());
-		
-		String code = null;
-		String clientId = null;
-		String redirectUri = null;
-		try {
-			code = (String) jsonReq.get("code");
-			clientId = (String) jsonReq.get("clientId");
-			redirectUri = (String) jsonReq.get("redirectUri");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		JsonObject jsonReq = JsonUtil.makeJson(req);
+		String code = jsonReq.get("code").getAsString();
+		String clientId = jsonReq.get("clientId").getAsString();
+		String redirectUri = jsonReq.get("redirectUri").getAsString();
 		
 		if (code != null) {
-			googleService.getGoogleUser(code, clientId, redirectUri);
+			thisUser = googleService.getGoogleUser(code, clientId, redirectUri);
 		} else {
 			System.out.println("No code");
 		}
+		
+		
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/json");
+		resp.getWriter().println(thisUser);
 		
 	}
 

@@ -1,10 +1,9 @@
 package com.articool.items.domain;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
-import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
+/*import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;*/
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -17,10 +16,9 @@ import com.googlecode.objectify.Key;*/
 import com.googlecode.objectify.annotation.Index;
 
 import java.lang.String;
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -49,11 +47,24 @@ public class Item {
 	
 	/*Json constructor*/
 	@SuppressWarnings("unchecked")
-	public Item(JSONObject jsonItems) {
+	public Item(JsonObject jsonItems) {
 		super();
-		try {
-			this.name = (String) jsonItems.get("name");
-			this.groupId = (Long) Long.valueOf((String) jsonItems.get("groupId")).longValue();
+		
+		Type collectionType = new TypeToken<Map<String,String>>(){}.getType();
+		
+		this.name = jsonItems.get("name").getAsString();
+		this.groupId = jsonItems.get("groupId").getAsLong();
+		this.price = jsonItems.get("price").getAsDouble();
+		this.shortDescription = jsonItems.get("groupId").getAsString();
+		this.description = jsonItems.get("groupId").getAsString();
+		this.fileIds = new Gson().fromJson(jsonItems.get("fileIds"), collectionType);
+		this.date = new Date();
+		
+		
+		
+		/*try {
+			//this.name = (String) jsonItems.get("name");
+			//this.groupId = (Long) Long.valueOf((String) jsonItems.get("groupId")).longValue();
 			
 			setJsonGroupId(jsonItems);
 			
@@ -64,32 +75,31 @@ public class Item {
 			this.date = new Date();
 		} catch (JSONException e) {
 			e.printStackTrace();
-		}
+		}*/
 			
 	}
 	
-	public Item(Long id, JSONObject jsonItems) {
+	public Item(Long id, JsonObject jsonItems) {
 		super();
 		
 		System.out.println(jsonItems);
 		
-		try {
+		
 			this.id = id;
-			this.groupId = (Long) Long.valueOf((String) jsonItems.get("groupId")).longValue();
-			this.name = (String) jsonItems.get("name");
-			this.price = setJsonPrice(jsonItems);
-			this.shortDescription = (String) jsonItems.get("shortDescription");
-			this.description = (String) jsonItems.get("description");
-			this.fileIds = setJsonFileIds(jsonItems);
+			Type collectionType = new TypeToken<Map<String,String>>(){}.getType();
+			
+			this.name = jsonItems.get("name").getAsString();
+			this.groupId = jsonItems.get("groupId").getAsLong();
+			this.price = jsonItems.get("price").getAsDouble();
+			this.shortDescription = jsonItems.get("shortDescription").getAsString();
+			this.description = jsonItems.get("description").getAsString();
+			this.fileIds = new Gson().fromJson(jsonItems.get("fileIds"), collectionType);
 			this.date = new Date();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	
 	
-	private long setJsonGroupId(JSONObject jsonItems) {
+	/*private long setJsonGroupId(JSONObject jsonItems) {
 		
 		Long thisGroupId = null;
 		
@@ -127,7 +137,7 @@ public class Item {
 			e.printStackTrace();
 		}
 		return thisPrice;
-	}
+	}*/
 
 	public Long getId() {
 		return id;
@@ -177,7 +187,7 @@ public class Item {
 		this.fileIds = fileIds;
 	}
 	
-	public Map<String, String> setJsonFileIds(JSONObject jsonItems) {
+	/*public Map<String, String> setJsonFileIds(JSONObject jsonItems) {
 		Gson gson=new Gson(); 
 		String json = null;
 		try {
@@ -190,7 +200,7 @@ public class Item {
 		mapFileIds=(Map<String,String>) gson.fromJson(json, mapFileIds.getClass());
 		
 		return this.fileIds = (Map<String, String>) mapFileIds;
-	}
+	}*/
 	
 	public Double getPrice() {
 		return price;

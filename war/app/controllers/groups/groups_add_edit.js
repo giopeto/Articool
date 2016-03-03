@@ -16,7 +16,6 @@ gifts.lazy.controller('groupsCtrl', function($scope, $log, $http) {
 			setMethod = "put";
 		}
 		groupsScope.isLoading = true;
-		
 		$http[setMethod]('groupsController', {
 			data: groupsScope.group
 		}).success(function(data) {

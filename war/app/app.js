@@ -86,7 +86,9 @@ gifts.config(function ($controllerProvider, $compileProvider, $filterProvider, $
 		  popupOptions: { width: 452, height: 633 }
 		});
 	
-   // $authProvider.storageType = 'localStorage';
+    $authProvider.facebook({
+        clientId: '498729053585609'
+      });
 
 
     $routeProvider.when('/items_add_edit', {

@@ -2,7 +2,7 @@ package com.articool.utility;
 
 import com.articool.groups.domain.Group;
 import com.articool.items.domain.Item;
-import com.articool.user.domain.User;
+import com.articool.users.domain.User;
 import com.googlecode.objectify.ObjectifyService;
 
 import javax.servlet.ServletContextListener;

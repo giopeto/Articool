@@ -1,7 +1,8 @@
 package com.articool.groups.domain;
 
-import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
+/*import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;*/
+import com.google.gson.JsonObject;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 /*import com.googlecode.objectify.annotation.Id;
@@ -25,27 +26,15 @@ public class Group {
 	public Group() {}
 	
 	/*Json constructor*/
-	@SuppressWarnings("unchecked")
-	public Group(JSONObject jsonGroups) {
+	public Group(JsonObject jsonGroups) {
 		super();
-		try {
-			//this.id = new Long((long) jsonItems.get("id"));
-			this.name = (String) jsonGroups.get("name");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-			
+		this.name = jsonGroups.get("name").getAsString();
 	}
 	
-	public Group(Long id, JSONObject jsonGroups) {
+	public Group(Long id, JsonObject jsonGroups) {
 		super();
-		try {
-			this.id = id;
-			this.name = (String) jsonGroups.get("name");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.id = id;
+		this.name = jsonGroups.get("name").getAsString();
 	}
 	
 	

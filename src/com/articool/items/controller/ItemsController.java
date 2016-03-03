@@ -1,11 +1,13 @@
 package com.articool.items.controller;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.*;
 
+import com.articool.groups.domain.Group;
 import com.articool.items.domain.Item;
 import com.articool.items.service.ItemServiceImpl;
 import com.articool.utility.JsonUtil;
@@ -14,97 +16,76 @@ import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 @SuppressWarnings("serial")
 public class ItemsController extends HttpServlet {
 
 	private ItemServiceImpl itemsService = new ItemServiceImpl();
+	private Gson gson = new Gson();
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		req.setCharacterEncoding("UTF-8");
-		JSONObject jsonReq = null;
-		JSONObject jsonResp = new JSONObject();
-		try {
-			jsonReq = (JSONObject) JsonUtil.makeJson(req).get("data");
-			jsonResp = itemsService.set(jsonReq);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		resp.setCharacterEncoding("UTF-8");
+		//req.setCharacterEncoding("UTF-8");
+		
+		JsonObject jsonReq = (JsonObject) JsonUtil.makeJson(req).get("data");
+		Item item = new Item(jsonReq);
+		itemsService.set(item);
+		//Item jsonResp = itemsService.set(item);
+		
+		/*resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/json");
-		resp.getWriter().println(jsonResp);
+		resp.getWriter().println(jsonResp);*/
 	}
 	
 	public void doPut(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
-		try {
-			JSONObject jsonReq = (JSONObject) JsonUtil.makeJson(req).get("data");
-			itemsService.update(jsonReq);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		JsonObject jsonReq = (JsonObject) JsonUtil.makeJson(req).get("data");
+		Item item = new Item(jsonReq.get("id").getAsLong(), jsonReq);
+		itemsService.update(item);
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
-		String allItems = null;
-		
-		
-		
-		
+		String returnItem = null;
 		
 		String reqId = req.getParameter("id");
-		
-		
 		String reqGroupId = req.getParameter("groupId");
 		
-		System.out.println(reqGroupId);
 		if (reqGroupId != null && !reqGroupId.equals("undefined") && !reqGroupId.isEmpty()){
-			System.out.println(reqGroupId);
-			
 			reqGroupId = reqGroupId.replace(":","");
-			Gson gson = new Gson();
 			long groupId = (Long) Long.valueOf(reqGroupId).longValue();
 			
-			System.out.println("gb g: "+groupId);
 			
-			allItems = itemsService.getItemsByGroupId(groupId);
+			
+			List<Item> allGroupItems = itemsService.getItemsByGroupId(groupId);
+			Type token = new TypeToken<List<Item>>(){}.getType();
+			returnItem = new Gson().toJson(allGroupItems, token);
 			
 			
 			
 		} else if (reqId != null && !reqId.isEmpty()) {
-			Gson gson = new Gson();
 			long id = Long.parseLong(reqId);
 			Item  thisItem = itemsService.getOneItemById(id);
-			System.out.println(gson.toJson(thisItem));
-			allItems = gson.toJson(thisItem).toString();
+			returnItem = gson.toJson(thisItem).toString();
 			
 		} else {
-			allItems = itemsService.get();
-			
+			List<Item> allItems = itemsService.get();
+			returnItem = gson.toJson(allItems);
 		}
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/json");
-		resp.getWriter().println(allItems);
+		resp.getWriter().println(returnItem);
 	}
 	
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
-		String reqId = req.getParameter("id");
-		long id = Long.parseLong(reqId);
+		long id = Long.parseLong(req.getParameter("id"));
 		itemsService.delete(id);
-		/*
-		try {
-			Long id = (Long) JsonUtil.makeJson(req).get("id");
-			itemsService.delete(id);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}*/
-		
 	}
 	
 }

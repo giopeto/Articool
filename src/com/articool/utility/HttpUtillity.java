@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
-
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -22,7 +19,8 @@ public class HttpUtillity {
 		connection.setDoOutput(true);
 		connection.setRequestMethod(httpMethod);
 		connection.setInstanceFollowRedirects(false);
-
+		
+		
 		if (connection.getResponseCode() != 200) {
 			throw new RuntimeException("Failed : HTTP error code : "
 					+ connection.getResponseCode());

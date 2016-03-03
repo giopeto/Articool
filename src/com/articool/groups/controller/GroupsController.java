@@ -1,98 +1,75 @@
 package com.articool.groups.controller;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.*;
 
 import com.articool.groups.domain.Group;
-import com.articool.groups.service.GroupService;
 import com.articool.groups.service.GroupServiceImpl;
-import com.articool.items.domain.Item;
-import com.articool.items.service.ItemServiceImpl;
 import com.articool.utility.JsonUtil;
-import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 @SuppressWarnings("serial")
 public class GroupsController extends HttpServlet {
 
 	private GroupServiceImpl groupService = new GroupServiceImpl();
+	private Gson gson = new Gson();
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		req.setCharacterEncoding("UTF-8");
-		JSONObject jsonReq = null;
 		
-		//System.out.println("asdasd" + JsonUtil.makeJson(req).toString());
+		//JsonObject jsonResp = new JsonObject();
+		JsonObject jsonReq =  (JsonObject) JsonUtil.makeJson(req).get("data");
+		Group group = new Group( jsonReq);
+		groupService.set(group);
 		
-		JSONObject jsonResp = new JSONObject();
-		
-		try {
-			jsonReq = (JSONObject) JsonUtil.makeJson(req).get("data");
-			System.out.println(jsonReq);
-			groupService.set(jsonReq);
-			//jsonResp = groupService.set(jsonReq);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		resp.setCharacterEncoding("UTF-8");
+		/*resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/json");
-		resp.getWriter().println(jsonResp);
+		resp.getWriter().println(jsonResp);*/
 	}
 	
 	public void doPut(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
-		try {
-			JSONObject jsonReq = (JSONObject) JsonUtil.makeJson(req).get("data");
-			groupService.update(jsonReq);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		JsonObject jsonReq = (JsonObject) JsonUtil.makeJson(req).get("data");
+		
+		
+		
+			Group group = new Group(jsonReq.get("id").getAsLong(), jsonReq);
+			groupService.update(group);
+		
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
-		String allGroups = null;
+		String returnGroup = null;
 		String reqId = req.getParameter("id");
 		if (reqId != null && !reqId.isEmpty()) {
-			Gson gson = new Gson();
 			long id = Long.parseLong(reqId);
 			System.out.println("Id: "+ reqId);
-			Group  thisItem = groupService.getOneGroupById(id);
-			System.out.println(gson.toJson(thisItem));
-			allGroups = gson.toJson(thisItem).toString();
-			
+			Group  group = groupService.getOneGroupById(id);
+			returnGroup = gson.toJson(group);
 		} else {
-			allGroups = groupService.get();
-			
+			List<Group> groups = groupService.get();
+			Type token = new TypeToken<List<Group>>(){}.getType();
+			returnGroup = new Gson().toJson(groups, token);
 		}
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/json");
-		resp.getWriter().println(allGroups);
+		resp.getWriter().println(returnGroup);
 	}
 	
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		
-		String reqId = req.getParameter("id");
-		long id = Long.parseLong(reqId);
+
+		long id = Long.parseLong(req.getParameter("id"));
 		groupService.delete(id);
-		/*
-		try {
-			Long id = (Long) JsonUtil.makeJson(req).get("id");
-			itemsService.delete(id);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}*/
 		
 	}
 	

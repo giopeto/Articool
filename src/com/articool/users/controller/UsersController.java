@@ -11,8 +11,8 @@ import com.articool.groups.service.GroupService;
 import com.articool.groups.service.GroupServiceImpl;
 import com.articool.items.domain.Item;
 import com.articool.items.service.ItemServiceImpl;
-import com.articool.user.domain.User;
-import com.articool.user.service.UserServiceImpl;
+import com.articool.users.domain.User;
+import com.articool.users.service.UserServiceImpl;
 import com.articool.utility.JsonUtil;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
@@ -35,18 +35,20 @@ public class UsersController extends HttpServlet {
 		
 		String thisUser = null;
 		String reqCode = req.getParameter("code");
+		String reqVendorId = req.getParameter("vendorId");
+		String provider = req.getParameter("provider");
 		
 		
 		
 		
-		System.out.println("цодеее"+ reqCode);
+		//System.out.println("цодеее"+ reqCode);
 		
-		if (reqCode != null && !reqCode.isEmpty()) {
-			Gson gson = new Gson();
+		if (reqVendorId != null && !reqVendorId.isEmpty()) {
 			
-			System.out.println("Id: "+ reqCode);
-			thisUser  = userService.getOneUserByVendorCode(reqCode);
-			System.out.println(gson.toJson(thisUser));
+			
+			//System.out.println("Id: "+ reqCode);
+			thisUser  = userService.getOneUserByVendorId(reqVendorId);
+		//	System.out.println(gson.toJson(thisUser));
 			//thisUser = gson.toJson(user).toString();
 			
 		} 

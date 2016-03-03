@@ -65,13 +65,22 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	
 	<servlet>
 		<servlet-name>Google</servlet-name>
-		<servlet-class>com.articool.auth.Google</servlet-class>
+		<servlet-class>com.articool.auth.controller.Google</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Google</servlet-name>
 		<url-pattern>/auth/google</url-pattern>
 	</servlet-mapping>
 	
+	
+	<servlet>
+		<servlet-name>Facebook</servlet-name>
+		<servlet-class>com.articool.auth.controller.Facebook</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Facebook</servlet-name>
+		<url-pattern>/auth/facebook</url-pattern>
+	</servlet-mapping>
 	
 	
 	<filter>
